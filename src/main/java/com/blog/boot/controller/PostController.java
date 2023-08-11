@@ -31,9 +31,11 @@ public class PostController {
         return new ResponseEntity<PostDto>(postService.createPost(postDto), HttpStatus.CREATED);
     }
 
+    // get all posts Rest API
+    // http://localhost:8080/api/posts
     @GetMapping
-    public ResponseEntity<List<PostDto>> getAllPosts(){
-        return new ResponseEntity<List<PostDto>>(postService.getAllPosts(), HttpStatus.OK);
+    public List<PostDto> getAllPosts(){
+        return postService.getAllPosts();
     }
 
 }
