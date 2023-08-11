@@ -1,18 +1,17 @@
 package com.blog.boot.service;
 
 import com.blog.boot.payload.PostDto;
-
-import java.util.List;
+import com.blog.boot.payload.PostResponse;
 
 public interface PostService {
 
     PostDto createPost(PostDto postDto);
 
-    List<PostDto> getAllPosts(int pageNo, int pageSize);
+    PostResponse getAllPosts(int pageNo, int pageSize);
 
-    PostDto getPostById(Long id);
+    PostDto getPostById(long id);
 
-    PostDto updatePostById(Long id, PostDto postDto);
+    PostDto updatePostById(long id, PostDto postDto);
 
-    void deletePostById(Long id);
+    void deletePostById(long id);
 }

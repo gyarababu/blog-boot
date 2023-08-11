@@ -1,11 +1,10 @@
 package com.blog.boot.controller;
 import com.blog.boot.payload.PostDto;
+import com.blog.boot.payload.PostResponse;
 import com.blog.boot.service.PostService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/posts")
@@ -34,9 +33,9 @@ public class PostController {
     // get all posts Rest API
     // http://localhost:8080/api/posts
     @GetMapping
-    public List<PostDto> getAllPosts(@RequestParam(name = "pageNo", defaultValue = "0", required = false)
+    public PostResponse getAllPosts(@RequestParam(name = "pageNo", defaultValue = "0", required = false)
                                          int pageNo,
-                                     @RequestParam(name = "pageSize", defaultValue = "10", required = false)
+                                    @RequestParam(name = "pageSize", defaultValue = "10", required = false)
                                          int pageSize
     ){
         return postService.getAllPosts(pageNo, pageSize);
@@ -46,7 +45,7 @@ public class PostController {
     // http://localhost:8080/api/posts/1
     // Need to pass values or parameters in Flower braces - {}
     @GetMapping("/{id}")
-    public ResponseEntity<PostDto> getPostById(@PathVariable(name = "id") Long id){
+    public ResponseEntity<PostDto> getPostById(@PathVariable(name = "id") long id){
        // return new ResponseEntity<PostDto>(postService.getPostById(id), HttpStatus.OK);
         // instead we can write like this
         return ResponseEntity.ok(postService.getPostById(id));
@@ -56,7 +55,7 @@ public class PostController {
     // update post by id REST API
     // http://localhost:8080/api/posts/1
     @PutMapping("/{id}")
-    public ResponseEntity<PostDto> updatePostById(@PathVariable(name = "id") Long id,
+    public ResponseEntity<PostDto> updatePostById(@PathVariable(name = "id") long id,
                                                   @RequestBody PostDto postDto){
         // since we have two objects, we are passing them together as one object - postResponse
         PostDto postResponse = postService.updatePostById(id, postDto);
@@ -66,7 +65,7 @@ public class PostController {
     // delete post by id REST API
     // http://localhost:8080/api/posts/1
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deletePostById(@PathVariable(name = "id") Long id){
+    public ResponseEntity<String> deletePostById(@PathVariable(name = "id") long id){
         postService.deletePostById(id);
         return new ResponseEntity<>("Post Deleted Successfully", HttpStatus.OK);
     }

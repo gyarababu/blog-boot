@@ -3,13 +3,13 @@ package com.blog.boot.service.impl;
 import com.blog.boot.entity.Post;
 import com.blog.boot.exception.ResourceNotFoundException;
 import com.blog.boot.payload.PostDto;
+import com.blog.boot.payload.PostResponse;
 import com.blog.boot.repository.PostRepository;
 import com.blog.boot.service.PostService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -41,7 +41,8 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public List<PostDto> getAllPosts(int pageNo, int pageSize) {
+    // changing List<PostDto> to PostResponse since returning PostResponse for paging support
+    public PostResponse getAllPosts(int pageNo, int pageSize) {
         // create pageable instance combining two parameters into one
         Pageable pageable = PageRequest.of(pageNo, pageSize);
 
@@ -51,12 +52,22 @@ public class PostServiceImpl implements PostService {
         // covert the page to List using page method
         List<Post> listOfPosts = posts.getContent();
 
-        // converting to DTO
-        return listOfPosts.stream().map(post -> mapToDTO(post)).collect(Collectors.toList());
+        // converting to DTO as content for paging support
+        List<PostDto> content = listOfPosts.stream().map(post -> mapToDTO(post)).collect(Collectors.toList());
+
+        // creating PostResponse object and setting all the variables or values to it
+        PostResponse postResponse = new PostResponse();
+        postResponse.setContent(content);
+        postResponse.setPageSize(posts.getSize());
+        postResponse.setPageNo(posts.getNumber());
+        postResponse.setTotalElements(posts.getTotalElements());
+        postResponse.setTotalPages(posts.getTotalPages());
+        postResponse.setLastPage(posts.isLast());
+        return postResponse;
     }
 
     @Override
-    public PostDto getPostById(Long id) {
+    public PostDto getPostById(long id) {
         // finding the post by id
         Post post = postRepository.findById(id).orElseThrow(
                 () -> new ResourceNotFoundException("Post","id",id)
@@ -67,7 +78,7 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public PostDto updatePostById(Long id, PostDto postDto) {
+    public PostDto updatePostById(long id, PostDto postDto) {
         // finding the post by id
         Post post = postRepository.findById(id).orElseThrow(
                 () -> new ResourceNotFoundException("Post", "id", id)
@@ -86,7 +97,7 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public void deletePostById(Long id) {
+    public void deletePostById(long id) {
         // find the post by id
         Post post = postRepository.findById(id).orElseThrow(
                 () -> new ResourceNotFoundException("Post", "id", id)
