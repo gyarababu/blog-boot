@@ -38,4 +38,15 @@ public class PostController {
         return postService.getAllPosts();
     }
 
+    // get post by id
+    //http://localhost:8080/api/posts/1
+    // Need to pass values or parameters in Flower braces - {}
+    @GetMapping("/{id}")
+    public ResponseEntity<PostDto> getPostById(@PathVariable(name = "id") Long id){
+       // return new ResponseEntity<PostDto>(postService.getPostById(id), HttpStatus.OK);
+        // instead we can write like this
+        return ResponseEntity.ok(postService.getPostById(id));
+
+    }
+
 }
