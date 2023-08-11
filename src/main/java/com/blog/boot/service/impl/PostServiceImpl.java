@@ -6,6 +6,8 @@ import com.blog.boot.repository.PostRepository;
 import com.blog.boot.service.PostService;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class PostServiceImpl implements PostService {
 
@@ -20,22 +22,40 @@ public class PostServiceImpl implements PostService {
     public PostDto createPost(PostDto postDto) {
 
         // convert DTO to entity
-        Post post = new Post();
-        post.setTitle(postDto.getTitle());
-        post.setDescription(postDto.getDescription());
-        post.setContent(postDto.getContent());
+        Post post = mapToDTO(postDto);
 
         // saving the entity in table
         Post newPost = postRepository.save(post);
 
         // convert entity to DTO
-        PostDto postResponse = new PostDto();
-        postResponse.setId(newPost.getId());
-        postResponse.setTitle(newPost.getTitle());
-        postResponse.setDescription(newPost.getDescription());
-        postResponse.setContent(newPost.getContent());
+        PostDto postResponse = mapToEntity(newPost);
 
         // sending the DTO to Rest endpoint
         return postResponse;
     }
+
+    @Override
+    public List<PostDto> getAllPosts() {
+        return null;
+    }
+
+    // convert DTO to entity
+    private PostDto mapToEntity(Post post){
+        PostDto postDto = new PostDto();
+        postDto.setId(post.getId());
+        postDto.setTitle(post.getTitle());
+        postDto.setDescription(post.getDescription());
+        postDto.setContent(post.getContent());
+        return postDto;
+    }
+
+    // convert entity to DTO
+    private Post mapToDTO(PostDto postDto){
+        Post post = new Post();
+        post.setTitle(postDto.getTitle());
+        post.setDescription(postDto.getDescription());
+        post.setContent(postDto.getContent());
+        return post;
+    }
+
 }
