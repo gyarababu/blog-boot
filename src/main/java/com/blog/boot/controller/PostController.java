@@ -1,4 +1,5 @@
 package com.blog.boot.controller;
+import com.blog.boot.entity.Post;
 import com.blog.boot.payload.PostDto;
 import com.blog.boot.service.PostService;
 import org.springframework.http.HttpStatus;
@@ -38,8 +39,8 @@ public class PostController {
         return postService.getAllPosts();
     }
 
-    // get post by id
-    //http://localhost:8080/api/posts/1
+    // get post by id REST API
+    // http://localhost:8080/api/posts/1
     // Need to pass values or parameters in Flower braces - {}
     @GetMapping("/{id}")
     public ResponseEntity<PostDto> getPostById(@PathVariable(name = "id") Long id){
@@ -49,4 +50,12 @@ public class PostController {
 
     }
 
+    // update post by id REST API
+    // http://localhost:8080/api/posts/1
+    @PutMapping("/{id}")
+    public ResponseEntity<PostDto> updatePostById(@PathVariable(name = "id") Long id,
+                                                  @RequestBody PostDto postDto){
+        PostDto postResponse = postService.updatePostById(id, postDto);
+        return new ResponseEntity<PostDto>(postResponse, HttpStatus.OK);
+    }
 }
