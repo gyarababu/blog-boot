@@ -1,5 +1,4 @@
 package com.blog.boot.controller;
-import com.blog.boot.entity.Post;
 import com.blog.boot.payload.PostDto;
 import com.blog.boot.service.PostService;
 import org.springframework.http.HttpStatus;
@@ -55,7 +54,16 @@ public class PostController {
     @PutMapping("/{id}")
     public ResponseEntity<PostDto> updatePostById(@PathVariable(name = "id") Long id,
                                                   @RequestBody PostDto postDto){
+        // since we have two objects, we are passing them together as one object - postResponse
         PostDto postResponse = postService.updatePostById(id, postDto);
         return new ResponseEntity<PostDto>(postResponse, HttpStatus.OK);
+    }
+
+    // delete post by id REST API
+    // http://localhost:8080/api/posts/1
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deletePostById(@PathVariable(name = "id") Long id){
+        postService.deletePostById(id);
+        return new ResponseEntity<>("Post Deleted Successfully", HttpStatus.OK);
     }
 }
