@@ -38,9 +38,11 @@ public class PostController {
                                     @RequestParam(name = "pageSize", defaultValue = "10", required = false)
                                          int pageSize,
                                     @RequestParam(name = "sortBy", defaultValue = "id", required = false)
-                                        String sortBy
+                                        String sortBy,
+                                    @RequestParam(name = "sortDir", defaultValue = "asc", required = false)
+                                        String sortDir
     ){
-        return postService.getAllPosts(pageNo, pageSize, sortBy);
+        return postService.getAllPosts(pageNo, pageSize, sortBy, sortDir);
     }
 
     // get post by id REST API

@@ -43,9 +43,14 @@ public class PostServiceImpl implements PostService {
 
     @Override
     // changing List<PostDto> to PostResponse since returning PostResponse for paging support
-    public PostResponse getAllPosts(int pageNo, int pageSize, String sortBy) {
+    public PostResponse getAllPosts(int pageNo, int pageSize, String sortBy, String sortDir) {
+
+        // sorting instance for both sorting parameters
+        Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.ASC.name()) ?
+                Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
+
         // create pageable instance combining two parameters into one
-        Pageable pageable = PageRequest.of(pageNo, pageSize, Sort.by(sortBy));
+        Pageable pageable = PageRequest.of(pageNo, pageSize, sort);
 
         // finding all posts, but it's in the form of Page
         Page<Post> posts = postRepository.findAll(pageable);
