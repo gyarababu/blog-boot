@@ -32,4 +32,15 @@ public class CommentController {
     public List<CommentDto> getAllCommentsByPostId(@PathVariable(name = "postId") long postId){
         return commentService.getAllCommentsByPostId(postId);
     }
+
+    // get comment by comment id and post id REST API
+    // http://localhost:8080/api/posts/1/comments/1
+    @GetMapping("/{commentId}")
+    public ResponseEntity<CommentDto> getCommentById(@PathVariable("postId") long postId,
+                                                         @PathVariable("commentId") long commentId){
+
+        // convert both parameters to single DTO
+        CommentDto commentDto = commentService.getCommentById(postId, commentId);
+        return new ResponseEntity<CommentDto>(commentDto, HttpStatus.OK);
+    }
 }
