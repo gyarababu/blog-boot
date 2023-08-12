@@ -2,9 +2,11 @@ package com.blog.boot.controller;
 import com.blog.boot.payload.PostDto;
 import com.blog.boot.payload.PostResponse;
 import com.blog.boot.service.PostService;
+import com.blog.boot.utils.Constants;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 
 @RestController
 @RequestMapping("/api/posts")
@@ -33,14 +35,14 @@ public class PostController {
     // get all posts Rest API
     // http://localhost:8080/api/posts
     @GetMapping
-    public PostResponse getAllPosts(@RequestParam(name = "pageNo", defaultValue = "0", required = false)
-                                         int pageNo,
-                                    @RequestParam(name = "pageSize", defaultValue = "10", required = false)
-                                         int pageSize,
-                                    @RequestParam(name = "sortBy", defaultValue = "id", required = false)
-                                        String sortBy,
-                                    @RequestParam(name = "sortDir", defaultValue = "asc", required = false)
-                                        String sortDir
+    public PostResponse getAllPosts(@RequestParam(name = "pageNo", defaultValue = Constants.DEFAULT_PAGE_NUMBER,
+                                            required = false) int pageNo,
+                                    @RequestParam(name = "pageSize", defaultValue = Constants.DEFAULT_PAGE_SIZE,
+                                            required = false) int pageSize,
+                                    @RequestParam(name = "sortBy", defaultValue = Constants.DEFAULT_SORT_BY,
+                                            required = false) String sortBy,
+                                    @RequestParam(name = "sortDir", defaultValue = Constants.DEFAULT_SORT_DIRECTION,
+                                            required = false) String sortDir
     ){
         return postService.getAllPosts(pageNo, pageSize, sortBy, sortDir);
     }
