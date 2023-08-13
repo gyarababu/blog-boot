@@ -39,4 +39,16 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<APIErrorDetails>(apiErrorDetails, HttpStatus.BAD_REQUEST);
     }
 
+    // Global Exception Handler
+    // Handling all exceptions in one place
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<APIErrorDetails> handleGlobalException(Exception exception,
+                                                                 WebRequest webRequest){
+        // create a new object by passing parameters
+        APIErrorDetails apiErrorDetails = new APIErrorDetails(new Date(),
+                exception.getMessage(),
+                webRequest.getDescription(false));
+        return new ResponseEntity<APIErrorDetails>(apiErrorDetails, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
 }
