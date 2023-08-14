@@ -6,6 +6,7 @@ import com.blog.boot.utils.Constants;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -26,6 +27,7 @@ public class PostController {
     // create post Rest API
     // http://localhost:8080/api/posts
     // @RequestBody annotation converts JSON into Java object or else null values will be stored
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     public ResponseEntity<PostDto> createPost(@Valid @RequestBody PostDto postDto){
         // we are passing PostDto or else we will be getting Object as Type in service
@@ -61,6 +63,7 @@ public class PostController {
 
     // update post by id REST API
     // http://localhost:8080/api/posts/1
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{id}")
     public ResponseEntity<PostDto> updatePostById(@PathVariable(name = "id") long id,
                                                   @Valid @RequestBody PostDto postDto){
@@ -71,6 +74,7 @@ public class PostController {
 
     // delete post by id REST API
     // http://localhost:8080/api/posts/1
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deletePostById(@PathVariable(name = "id") long id){
         postService.deletePostById(id);
