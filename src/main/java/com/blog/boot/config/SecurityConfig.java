@@ -8,12 +8,9 @@ import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
 // Marks this class as a Spring configuration with bean definitions and settings.
@@ -54,6 +51,8 @@ public class SecurityConfig {
                         (authorize) -> authorize
                                 // all the USER roles can access get REST APIs
                                 .requestMatchers(HttpMethod.GET, "/api/**").permitAll()
+                                // all the USERS will be able to access login
+                                .requestMatchers("/api/auth/**").permitAll()
                                 // apart from GET endpoint needs to be authenticated
                                 .anyRequest().authenticated()
 
