@@ -5,6 +5,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -30,6 +31,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         // create a new object by passing parameters
         APIErrorDetails apiErrorDetails = new APIErrorDetails(new Date(),
                 exception.getMessage(),
+                // we are only passing the url in details or description, so we write false
                 webRequest.getDescription(false));
         return new ResponseEntity<APIErrorDetails>(apiErrorDetails, HttpStatus.NOT_FOUND);
     }
@@ -43,9 +45,24 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         // create a new object by passing parameters
         APIErrorDetails apiErrorDetails = new APIErrorDetails(new Date(),
                 exception.getMessage(),
+                // we are only passing the url in details or description, so we write false
                 webRequest.getDescription(false));
         return new ResponseEntity<APIErrorDetails>(apiErrorDetails, HttpStatus.BAD_REQUEST);
     }
+
+    // Method level exception annotation
+    // Handling specific exceptions
+   @ExceptionHandler(AccessDeniedException.class)
+   public ResponseEntity<APIErrorDetails> handleAccessDeniedException(AccessDeniedException exception,
+                                                                      WebRequest webRequest){
+
+        // creating new object by passing parameters
+       APIErrorDetails apiErrorDetails = new APIErrorDetails(new Date(),
+               exception.getMessage(),
+               // we are only passing the url in details or description, so we write false
+               webRequest.getDescription(false));
+       return new ResponseEntity<APIErrorDetails>(apiErrorDetails, HttpStatus.UNAUTHORIZED);
+   }
 
     // Global Exception Handler
     // Handling all exceptions in one place
@@ -55,6 +72,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         // create a new object by passing parameters
         APIErrorDetails apiErrorDetails = new APIErrorDetails(new Date(),
                 exception.getMessage(),
+                // we are only passing the url in details or description, so we write false
                 webRequest.getDescription(false));
         return new ResponseEntity<APIErrorDetails>(apiErrorDetails, HttpStatus.INTERNAL_SERVER_ERROR);
     }
