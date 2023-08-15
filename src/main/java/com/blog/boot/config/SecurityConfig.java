@@ -3,7 +3,9 @@ package com.blog.boot.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.userdetails.User;
@@ -20,6 +22,20 @@ import org.springframework.security.web.SecurityFilterChain;
 // @PreAuthorize or @PostAuthorize for every endpoint
 @EnableMethodSecurity
 public class SecurityConfig {
+
+    private UserDetailsService userDetailsService;
+
+    public SecurityConfig(UserDetailsService userDetailsService) {
+        this.userDetailsService = userDetailsService;
+    }
+
+    // Spring automatically provides user details from a database to AuthenticationManager
+    // and does password encode or decode for us
+    @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration)
+            throws Exception {
+        return configuration.getAuthenticationManager();
+    }
 
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
@@ -47,28 +63,6 @@ public class SecurityConfig {
         // Return the configured security filter chain implementation class
         // for the SecurityFilterChain interface.
         return httpSecurity.build();
-    }
-
-    @Bean
-    // using inbuilt UserDetailsService for giving credentials and roles
-    public UserDetailsService userDetailsService(){
-        // using UserDetails for mentioning single person details
-        UserDetails john = User.builder()
-                .username("john")
-                // encoding password
-                .password(passwordEncoder().encode("john"))
-                .roles("USER")
-                .build();
-
-        // creating one more person details
-        UserDetails admin = User.builder()
-                .username("admin")
-                .password(passwordEncoder().encode("admin"))
-                .roles("ADMIN")
-                .build();
-
-        // now details are in InMemoryUserDetailsManager
-        return new InMemoryUserDetailsManager(john, admin);
     }
 
     @Bean
