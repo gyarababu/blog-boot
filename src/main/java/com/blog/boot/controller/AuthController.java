@@ -1,5 +1,6 @@
 package com.blog.boot.controller;
 
+import com.blog.boot.payload.JwtAuthResponse;
 import com.blog.boot.payload.LoginDto;
 import com.blog.boot.payload.RegisterDto;
 import com.blog.boot.service.AuthService;
@@ -21,10 +22,15 @@ public class AuthController {
 
     // creating login REST API
     // gave multiple urls
+    // changing the login REST API for JWT response
     @PostMapping(value = {"/login", "/signin"})
-    public ResponseEntity<String> login(@RequestBody LoginDto loginDto){
-        String response = authService.login(loginDto);
-        return ResponseEntity.ok(response);
+    public ResponseEntity<JwtAuthResponse> login(@RequestBody LoginDto loginDto){
+        String token = authService.login(loginDto);
+
+        JwtAuthResponse jwtAuthResponse = new JwtAuthResponse();
+        // setting the token
+        jwtAuthResponse.setAccessToken(token);
+        return ResponseEntity.ok(jwtAuthResponse);
     }
 
     // creating register REST API

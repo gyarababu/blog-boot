@@ -7,6 +7,7 @@ import com.blog.boot.payload.LoginDto;
 import com.blog.boot.payload.RegisterDto;
 import com.blog.boot.repository.RoleRepository;
 import com.blog.boot.repository.UserRepository;
+import com.blog.boot.security.JwtTokenProvider;
 import com.blog.boot.service.AuthService;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -26,13 +27,16 @@ public class AuthServiceImpl implements AuthService {
     private UserRepository userRepository;
     private RoleRepository roleRepository;
     private PasswordEncoder passwordEncoder;
+    private JwtTokenProvider jwtTokenProvider;
 
     public AuthServiceImpl(AuthenticationManager authenticationManager, UserRepository userRepository,
-                           RoleRepository roleRepository, PasswordEncoder passwordEncoder) {
+                           RoleRepository roleRepository, PasswordEncoder passwordEncoder,
+                           JwtTokenProvider jwtTokenProvider) {
         this.authenticationManager = authenticationManager;
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.passwordEncoder = passwordEncoder;
+        this.jwtTokenProvider = jwtTokenProvider;
     }
 
     // creating login method and authenticating using in built Authentication interface
@@ -51,8 +55,9 @@ public class AuthServiceImpl implements AuthService {
                 .getContext()
                 .setAuthentication(authentication);
 
-        // Returning a success message indicating successful login
-        return "User logged in successfully ";
+        // generate JWT token and return it
+        String token = jwtTokenProvider.generateJwtToken(authentication);
+        return token;
     }
 
     @Override
