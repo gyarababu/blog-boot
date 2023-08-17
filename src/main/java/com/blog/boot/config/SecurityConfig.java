@@ -1,5 +1,7 @@
 package com.blog.boot.config;
 
+import com.blog.boot.security.JwtAuthenticationEntryPoint;
+import com.blog.boot.security.JwtAuthenticationFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -8,10 +10,12 @@ import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 // Marks this class as a Spring configuration with bean definitions and settings.
 @Configuration
@@ -22,8 +26,18 @@ public class SecurityConfig {
 
     private UserDetailsService userDetailsService;
 
-    public SecurityConfig(UserDetailsService userDetailsService) {
+    // configuring JWT in security
+    private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
+
+    // configuring JWTFilter in security
+    private JwtAuthenticationFilter jwtAuthenticationFilter;
+
+    public SecurityConfig(UserDetailsService userDetailsService,
+                          JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint,
+                          JwtAuthenticationFilter jwtAuthenticationFilter) {
         this.userDetailsService = userDetailsService;
+        this.jwtAuthenticationEntryPoint = jwtAuthenticationEntryPoint;
+        this.jwtAuthenticationFilter = jwtAuthenticationFilter;
     }
 
     // Spring automatically provides user details from a database to AuthenticationManager
@@ -54,10 +68,18 @@ public class SecurityConfig {
                                 // all the USERS will be able to access login
                                 .requestMatchers("/api/auth/**").permitAll()
                                 // apart from GET endpoint needs to be authenticated
-                                .anyRequest().authenticated()
+                                .anyRequest().authenticated())
+                // Configure exception handling for unauthorized requests
+                .exceptionHandling(exception -> exception
+                        .authenticationEntryPoint(jwtAuthenticationEntryPoint))
+                // Configure session management to use stateless sessions
+                // (no session management)
+                .sessionManagement(session -> session
+                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                );
 
-                // Configure the application to use HTTP Basic Authentication.
-                ).httpBasic(Customizer.withDefaults());
+        // executing JWT filter before spring security filter
+        httpSecurity.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
         // Return the configured security filter chain implementation class
         // for the SecurityFilterChain interface.
