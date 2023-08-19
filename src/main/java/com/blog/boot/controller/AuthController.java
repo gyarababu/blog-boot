@@ -4,6 +4,9 @@ import com.blog.boot.payload.JwtAuthResponse;
 import com.blog.boot.payload.LoginDto;
 import com.blog.boot.payload.RegisterDto;
 import com.blog.boot.service.AuthService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,6 +16,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/auth")
+@Tag(
+        name = "Auth Resource CRUD REST APIs"
+)
 public class AuthController {
     private AuthService authService;
 
@@ -20,6 +26,14 @@ public class AuthController {
         this.authService = authService;
     }
 
+    @Operation(
+            summary = "Log In or Sign In REST API",
+            description = "Login/Signin into the Blog"
+    )
+    @ApiResponse(
+            responseCode = "200",
+            description = "Http Status 200 SUCCESS"
+    )
     // creating login REST API
     // gave multiple urls
     // changing the login REST API for JWT response
@@ -33,6 +47,14 @@ public class AuthController {
         return ResponseEntity.ok(jwtAuthResponse);
     }
 
+    @Operation(
+            summary = "Register or Sign Up REST API",
+            description = "Saving registered or signed up data into database"
+    )
+    @ApiResponse(
+            responseCode = "201",
+            description = "Http Status 201 CREATED"
+    )
     // creating register REST API
     // gave multiple urls
     @PostMapping(value = {"/register", "/signup"})

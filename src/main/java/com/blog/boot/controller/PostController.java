@@ -3,7 +3,10 @@ import com.blog.boot.payload.PostDto;
 import com.blog.boot.payload.PostResponse;
 import com.blog.boot.service.PostService;
 import com.blog.boot.utils.Constants;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +18,9 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/posts")
+@Tag(
+        name = "Post Resource CRUD REST APIs"
+)
 public class PostController {
 
     // we are using interface for LooseCoupling.
@@ -27,6 +33,14 @@ public class PostController {
         this.postService = postService;
     }
 
+    @Operation(
+            summary = "Create Post REST API",
+            description = "Saving post data into database"
+    )
+    @ApiResponse(
+            responseCode = "201",
+            description = "Http Status 201 CREATED"
+    )
     // create post Rest API
     // http://localhost:8080/api/posts
     // @RequestBody annotation converts JSON into Java object or else null values will be stored
@@ -42,6 +56,14 @@ public class PostController {
         return new ResponseEntity<PostDto>(postService.createPost(postDto), HttpStatus.CREATED);
     }
 
+    @Operation(
+            summary = "Get All Posts REST API",
+            description = "Get all posts data from database"
+    )
+    @ApiResponse(
+            responseCode = "200",
+            description = "Http Status 200 SUCCESS"
+    )
     // get all posts Rest API
     // http://localhost:8080/api/posts
     @GetMapping
@@ -57,6 +79,14 @@ public class PostController {
         return postService.getAllPosts(pageNo, pageSize, sortBy, sortDir);
     }
 
+    @Operation(
+            summary = "Get Post By Id REST API",
+            description = "Get single post data from database"
+    )
+    @ApiResponse(
+            responseCode = "200",
+            description = "Http Status 200 SUCCESS"
+    )
     // get post by id REST API
     // http://localhost:8080/api/posts/1
     // Need to pass values or parameters in Flower braces - {}
@@ -68,6 +98,14 @@ public class PostController {
 
     }
 
+    @Operation(
+            summary = "Update Post By Id REST API",
+            description = "Update single post data from database"
+    )
+    @ApiResponse(
+            responseCode = "200",
+            description = "Http Status 200 SUCCESS"
+    )
     // update post by id REST API
     // http://localhost:8080/api/posts/1
     // creating authorization header to the REST API in swagger
@@ -83,6 +121,14 @@ public class PostController {
         return new ResponseEntity<PostDto>(postResponse, HttpStatus.OK);
     }
 
+    @Operation(
+            summary = "Delete Post By Id REST API",
+            description = "Delete single post data from database"
+    )
+    @ApiResponse(
+            responseCode = "200",
+            description = "Http Status 200 SUCCESS"
+    )
     // delete post by id REST API
     // http://localhost:8080/api/posts/1
     // creating authorization header to the REST API in swagger
@@ -96,6 +142,14 @@ public class PostController {
         return new ResponseEntity<>("Post Deleted Successfully", HttpStatus.OK);
     }
 
+    @Operation(
+            summary = "Get All Posts By Category REST API",
+            description = "Get All posts using category data from database"
+    )
+    @ApiResponse(
+            responseCode = "200",
+            description = "Http Status 200 SUCCESS"
+    )
     // get posts by category id REST API
     // http://localhost:8080/api/posts/category/1
     @GetMapping("/category/{id}")
