@@ -3,6 +3,8 @@ package com.blog.boot.service;
 import com.blog.boot.payload.PostDto;
 import com.blog.boot.payload.PostResponse;
 
+import java.util.List;
+
 public interface PostService {
 
     PostDto createPost(PostDto postDto);
@@ -14,4 +16,6 @@ public interface PostService {
     PostDto updatePostById(long id, PostDto postDto);
 
     void deletePostById(long id);
+
+    List<PostDto> getPostsByCategory(long categoryId);
 }
