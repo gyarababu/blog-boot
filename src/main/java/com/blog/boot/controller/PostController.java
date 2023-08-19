@@ -3,6 +3,7 @@ import com.blog.boot.payload.PostDto;
 import com.blog.boot.payload.PostResponse;
 import com.blog.boot.service.PostService;
 import com.blog.boot.utils.Constants;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,6 +30,10 @@ public class PostController {
     // create post Rest API
     // http://localhost:8080/api/posts
     // @RequestBody annotation converts JSON into Java object or else null values will be stored
+    // creating authorization header to the REST API in swagger
+    @SecurityRequirement(
+            name = "Authentication Header"
+    )
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     public ResponseEntity<PostDto> createPost(@Valid @RequestBody PostDto postDto){
@@ -65,6 +70,10 @@ public class PostController {
 
     // update post by id REST API
     // http://localhost:8080/api/posts/1
+    // creating authorization header to the REST API in swagger
+    @SecurityRequirement(
+            name = "Authentication Header"
+    )
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{id}")
     public ResponseEntity<PostDto> updatePostById(@PathVariable(name = "id") long id,
@@ -76,6 +85,10 @@ public class PostController {
 
     // delete post by id REST API
     // http://localhost:8080/api/posts/1
+    // creating authorization header to the REST API in swagger
+    @SecurityRequirement(
+            name = "Authentication Header"
+    )
     @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deletePostById(@PathVariable(name = "id") long id){
