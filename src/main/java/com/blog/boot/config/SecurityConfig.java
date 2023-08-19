@@ -67,6 +67,10 @@ public class SecurityConfig {
                                 .requestMatchers(HttpMethod.GET, "/api/**").permitAll()
                                 // all the USERS will be able to access login
                                 .requestMatchers("/api/auth/**").permitAll()
+                                // all the USERS will be able to access swagger urls
+                                .requestMatchers("/swagger-ui/**").permitAll()
+                                // getting all REST API documentation
+                                .requestMatchers("/v3/api-docs/**").permitAll()
                                 // apart from GET endpoint needs to be authenticated
                                 .anyRequest().authenticated())
                 // Configure exception handling for unauthorized requests
