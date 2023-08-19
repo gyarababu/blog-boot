@@ -4,6 +4,7 @@ import com.blog.boot.payload.CategoryDto;
 import com.blog.boot.service.CategoryService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,6 +36,10 @@ public class CategoryController {
     )
     // create add category REST API
     // gave authorization
+    // creating authorization header to the REST API in swagger
+    @SecurityRequirement(
+            name = "Authentication Header"
+    )
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     public ResponseEntity<CategoryDto> addCategory(@RequestBody CategoryDto categoryDto){
@@ -81,6 +86,10 @@ public class CategoryController {
     )
     // create update category REST API
     // gave authorization
+    // creating authorization header to the REST API in swagger
+    @SecurityRequirement(
+            name = "Authentication Header"
+    )
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("{id}")
     public ResponseEntity<CategoryDto> updateCategory(@RequestBody CategoryDto categoryDto,
@@ -98,6 +107,10 @@ public class CategoryController {
     )
     // create delete REST API
     // gave authorization
+    // creating authorization header to the REST API in swagger
+    @SecurityRequirement(
+            name = "Authentication Header"
+    )
     @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("{id}")
     public  ResponseEntity<String> deleteCategory(@PathVariable("id") long categoryId){
