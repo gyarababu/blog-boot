@@ -29,4 +29,7 @@ public class PostDto {
 
     // getting all comments for post
     private Set<CommentDto> comments;
+
+    // we get category in dropdown and each category is specified with id
+    private long categoryId;
 }

@@ -1,9 +1,11 @@
 package com.blog.boot.service.impl;
 
+import com.blog.boot.entity.Category;
 import com.blog.boot.entity.Post;
 import com.blog.boot.exception.ResourceNotFoundException;
 import com.blog.boot.payload.PostDto;
 import com.blog.boot.payload.PostResponse;
+import com.blog.boot.repository.CategoryRepository;
 import com.blog.boot.repository.PostRepository;
 import com.blog.boot.service.PostService;
 import org.modelmapper.ModelMapper;
@@ -24,16 +26,27 @@ public class PostServiceImpl implements PostService {
 
     private ModelMapper modelMapper;
 
-    public PostServiceImpl(PostRepository postRepository, ModelMapper modelMapper) {
+    private CategoryRepository categoryRepository;
+
+    public PostServiceImpl(PostRepository postRepository, ModelMapper modelMapper,
+                           CategoryRepository categoryRepository) {
         this.postRepository = postRepository;
         this.modelMapper = modelMapper;
+        this.categoryRepository = categoryRepository;
     }
 
     @Override
     public PostDto createPost(PostDto postDto) {
 
+        // find category id
+        Category category = categoryRepository.findById(postDto.getCategoryId()).orElseThrow(() ->
+                new ResourceNotFoundException("Category", "id", postDto.getCategoryId()));
+
         // convert DTO to entity
         Post post = mapToEntity(postDto);
+
+        // before saving the post set the category
+        post.setCategory(category);
 
         // saving the entity in table
         Post newPost = postRepository.save(post);
@@ -94,10 +107,17 @@ public class PostServiceImpl implements PostService {
                 () -> new ResourceNotFoundException("Post", "id", id)
         );
 
+        // find category id
+        Category category = categoryRepository.findById(postDto.getCategoryId()).orElseThrow(() ->
+                new ResourceNotFoundException("Category", "id", postDto.getCategoryId()));
+
         // updating the details
         post.setTitle(postDto.getTitle());
         post.setDescription(postDto.getDescription());
         post.setContent(postDto.getContent());
+
+        //before saving the post
+        post.setCategory(category);
 
         // saving the details
         Post updatedPost = postRepository.save(post);
