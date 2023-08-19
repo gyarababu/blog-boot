@@ -31,4 +31,8 @@ public class Post {
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Comment> comments = new HashSet<>();
+
+    @ManyToOne(fetch = FetchType.LAZY) // whenever we call post entity the category won't load immediately
+    @JoinColumn(name = "category_id") // creating foreign key in child table
+    private Category category;
 }
