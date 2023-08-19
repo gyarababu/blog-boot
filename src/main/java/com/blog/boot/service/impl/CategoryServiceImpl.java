@@ -1,6 +1,7 @@
 package com.blog.boot.service.impl;
 
 import com.blog.boot.entity.Category;
+import com.blog.boot.exception.ResourceNotFoundException;
 import com.blog.boot.payload.CategoryDto;
 import com.blog.boot.repository.CategoryRepository;
 import com.blog.boot.service.CategoryService;
@@ -27,5 +28,16 @@ public class CategoryServiceImpl implements CategoryService {
 
         // covert entity to dto
         return modelMapper.map(newCategory, CategoryDto.class);
+    }
+
+    @Override
+    public CategoryDto getCategory(long categoryId) {
+
+        // find category else exception
+        Category category = categoryRepository.findById(categoryId).orElseThrow(() ->
+                new ResourceNotFoundException("Category", "id", categoryId));
+
+        // covert entity to dto
+        return modelMapper.map(category, CategoryDto.class);
     }
 }
