@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/categories")
+@RequestMapping("/api/v1")
 @Tag(
         name = "Category Resource CRUD REST APIs"
 )
@@ -41,7 +41,7 @@ public class CategoryController {
             name = "Authentication Header"
     )
     @PreAuthorize("hasRole('ADMIN')")
-    @PostMapping
+    @PostMapping("/categories")
     public ResponseEntity<CategoryDto> addCategory(@RequestBody CategoryDto categoryDto){
         CategoryDto newCategory = categoryService.addCategory(categoryDto);
         return new ResponseEntity<CategoryDto>(newCategory, HttpStatus.CREATED);
@@ -56,7 +56,7 @@ public class CategoryController {
             description = "Http Status 200 SUCCESS"
     )
     // create get category REST API
-    @GetMapping("{id}")
+    @GetMapping("/categories/{id}")
     public ResponseEntity<CategoryDto> getCategory(@PathVariable("id") long categoryId){
         CategoryDto categoryDto = categoryService.getCategory(categoryId);
         return ResponseEntity.ok(categoryDto);
@@ -71,7 +71,7 @@ public class CategoryController {
             description = "Http Status 200 SUCCESS"
     )
     // create get all categories REST API
-    @GetMapping
+    @GetMapping("/categories")
     public ResponseEntity<List<CategoryDto>> getAllCategories(){
         return  ResponseEntity.ok(categoryService.getAllCategories());
     }
@@ -91,7 +91,7 @@ public class CategoryController {
             name = "Authentication Header"
     )
     @PreAuthorize("hasRole('ADMIN')")
-    @PutMapping("{id}")
+    @PutMapping("/categories/{id}")
     public ResponseEntity<CategoryDto> updateCategory(@RequestBody CategoryDto categoryDto,
                                                       @PathVariable("id") long categoryId){
         return ResponseEntity.ok(categoryService.updateCategory(categoryDto, categoryId));
@@ -112,7 +112,7 @@ public class CategoryController {
             name = "Authentication Header"
     )
     @PreAuthorize("hasRole('ADMIN')")
-    @DeleteMapping("{id}")
+    @DeleteMapping("/categories/{id}")
     public  ResponseEntity<String> deleteCategory(@PathVariable("id") long categoryId){
         categoryService.deleteCategory(categoryId);
         return ResponseEntity.ok("Category deleted successfully");

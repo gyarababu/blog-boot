@@ -72,9 +72,9 @@ public class SecurityConfig {
                         // We're using a short function to specify that any request must be authenticated.
                         (authorize) -> authorize
                                 // all the USER roles can access get REST APIs
-                                .requestMatchers(HttpMethod.GET, "/api/**").permitAll()
+                                .requestMatchers(HttpMethod.GET, "/api/v1/**").permitAll()
                                 // all the USERS will be able to access login
-                                .requestMatchers("/api/auth/**").permitAll()
+                                .requestMatchers("/api/v1/auth/**").permitAll()
                                 // all the USERS will be able to access swagger urls
                                 .requestMatchers("/swagger-ui/**").permitAll()
                                 // getting all REST API documentation

@@ -1,6 +1,5 @@
 package com.blog.boot.controller;
 import com.blog.boot.payload.PostDto;
-import com.blog.boot.payload.PostDtoV2;
 import com.blog.boot.payload.PostResponse;
 import com.blog.boot.service.PostService;
 import com.blog.boot.utils.Constants;
@@ -14,12 +13,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
 @RestController
-@RequestMapping()
+@RequestMapping("/api/v1")
 @Tag(
         name = "Post Resource CRUD REST APIs"
 )
@@ -51,7 +49,7 @@ public class PostController {
             name = "Authentication Header"
     )
     @PreAuthorize("hasRole('ADMIN')")
-    @PostMapping("/api/v1/posts")
+    @PostMapping("/posts") // versioning
     public ResponseEntity<PostDto> createPost(@Valid @RequestBody PostDto postDto){
         // we are passing PostDto or else we will be getting Object as Type in service
         // we are passing HttpsStatus as 2nd Parameter
@@ -68,7 +66,7 @@ public class PostController {
     )
     // get all posts Rest API
     // http://localhost:8080/api/posts
-    @GetMapping("/api/v1/posts")
+    @GetMapping("/posts")
     public PostResponse getAllPosts(@RequestParam(name = "pageNo", defaultValue = Constants.DEFAULT_PAGE_NUMBER,
                                             required = false) int pageNo,
                                     @RequestParam(name = "pageSize", defaultValue = Constants.DEFAULT_PAGE_SIZE,
@@ -92,34 +90,11 @@ public class PostController {
     // get post by id REST API
     // http://localhost:8080/api/posts/1
     // Need to pass values or parameters in Flower braces - {}
-    // V1 REST API
-    @GetMapping(value = "/api/posts/{id}", produces = "application/vnd.cipher.v1+json")
+    @GetMapping(value = "/posts/{id}")
     public ResponseEntity<PostDto> getPostByIdV1(@PathVariable(name = "id") long id){
        // return new ResponseEntity<PostDto>(postService.getPostById(id), HttpStatus.OK);
         // instead we can write like this
         return ResponseEntity.ok(postService.getPostById(id));
-
-    }
-
-    // V2 REST API
-    @GetMapping(value = "/api/posts/{id}", produces = "application/vnd.cipher.v2+json")
-    public ResponseEntity<PostDtoV2> getPostByIdV2(@PathVariable(name = "id") long id){
-        // returning postdto
-        PostDto postDto = postService.getPostById(id);
-        // converting v1 to v2
-        PostDtoV2 postDtoV2 = new PostDtoV2();
-        postDtoV2.setId(postDto.getId());
-        postDtoV2.setTitle(postDto.getTitle());
-        postDtoV2.setDescription(postDto.getDescription());
-        postDtoV2.setContent(postDto.getContent());
-        //providing the tags support in v2 or adding new feature in v2
-        List<String> tags = new ArrayList<>();
-        tags.add("Java");
-        tags.add("spring");
-        tags.add("boot");
-        postDtoV2.setTags(tags);
-        // returning postdtov2
-        return ResponseEntity.ok(postDtoV2);
 
     }
 
@@ -138,7 +113,7 @@ public class PostController {
             name = "Authentication Header"
     )
     @PreAuthorize("hasRole('ADMIN')")
-    @PutMapping("/api/v1/posts/{id}")
+    @PutMapping("/posts/{id}") // versioning
     public ResponseEntity<PostDto> updatePostById(@PathVariable(name = "id") long id,
                                                   @Valid @RequestBody PostDto postDto){
         // since we have two objects, we are passing them together as one object - postResponse
@@ -161,7 +136,7 @@ public class PostController {
             name = "Authentication Header"
     )
     @PreAuthorize("hasRole('ADMIN')")
-    @DeleteMapping("/api/v1/posts/{id}")
+    @DeleteMapping("/posts/{id}") // versioning
     public ResponseEntity<String> deletePostById(@PathVariable(name = "id") long id){
         postService.deletePostById(id);
         return new ResponseEntity<>("Post Deleted Successfully", HttpStatus.OK);
@@ -177,7 +152,7 @@ public class PostController {
     )
     // get posts by category id REST API
     // http://localhost:8080/api/posts/category/1
-    @GetMapping("/api/v1/posts/category/{id}")
+    @GetMapping("/posts/category/{id}") // versioning
     public ResponseEntity<List<PostDto>> getPostsByCategoryId(@PathVariable("id") long categoryId){
         List<PostDto> postDtos = postService.getPostsByCategory(categoryId);
         return  ResponseEntity.ok(postDtos);

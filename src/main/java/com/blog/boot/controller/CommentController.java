@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/posts/{postId}/comments")
+@RequestMapping("/api/v1")
 @Tag(
         name = "Comment Resource CRUD REST APIs"
 )
@@ -35,7 +35,7 @@ public class CommentController {
     )
     // create comment REST API
     // http://localhost:8080/api/posts/1/comments
-    @PostMapping
+    @PostMapping("/posts/{postId}/comments")
     public ResponseEntity<CommentDto> createComment(@PathVariable(name = "postId") long postId,
                                                     @Valid @RequestBody CommentDto commentDto){
         return new ResponseEntity<CommentDto>(commentService.createComment(postId, commentDto), HttpStatus.CREATED);
@@ -51,7 +51,7 @@ public class CommentController {
     )
     // get all comments by post id REST API
     // http://localhost:8080/api/posts/1/comments
-    @GetMapping
+    @GetMapping("/posts/{postId}/comments")
     public List<CommentDto> getAllCommentsByPostId(@PathVariable(name = "postId") long postId){
         return commentService.getAllCommentsByPostId(postId);
     }
@@ -66,7 +66,7 @@ public class CommentController {
     )
     // get comment by comment id and post id REST API
     // http://localhost:8080/api/posts/1/comments/1
-    @GetMapping("/{commentId}")
+    @GetMapping("/posts/{postId}/comments/{commentId}")
     public ResponseEntity<CommentDto> getCommentById(@PathVariable(name = "postId") long postId,
                                                          @PathVariable(name = "commentId") long commentId){
 
@@ -85,7 +85,7 @@ public class CommentController {
     )
     // update comment REST API
     // http://localhost:8080/api/posts/1/comments/1
-    @PutMapping("/{commentId}")
+    @PutMapping("/posts/{postId}/comments/{commentId}")
     public ResponseEntity<CommentDto> updateComment(@PathVariable(name = "postId") long postId,
                                                     @PathVariable(name = "commentId")long commentId,
                                                     @Valid @RequestBody CommentDto commentDto){
@@ -103,7 +103,7 @@ public class CommentController {
     )
     // delete comment REST API
     // http://localhost:8080/api/posts/1/comments/1
-    @DeleteMapping("/{commentId}")
+    @DeleteMapping("/posts/{postId}/comments/{commentId}")
     public ResponseEntity<String> deleteComment(@PathVariable(name = "postId") long postId,
                                                 @PathVariable(name = "commentId")long commentId){
         commentService.deleteComment(postId, commentId);
