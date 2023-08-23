@@ -93,7 +93,7 @@ public class PostController {
     // http://localhost:8080/api/posts/1
     // Need to pass values or parameters in Flower braces - {}
     // V1 REST API
-    @GetMapping(value = "/api/posts/{id}", params = "version=1")
+    @GetMapping(value = "/api/posts/{id}", headers = "X-API-VERSION=1")
     public ResponseEntity<PostDto> getPostByIdV1(@PathVariable(name = "id") long id){
        // return new ResponseEntity<PostDto>(postService.getPostById(id), HttpStatus.OK);
         // instead we can write like this
@@ -102,7 +102,7 @@ public class PostController {
     }
 
     // V2 REST API
-    @GetMapping(value = "/api/posts/{id}", params = "version=2")
+    @GetMapping(value = "/api/posts/{id}", headers = "X-API-VERSION=2")
     public ResponseEntity<PostDtoV2> getPostByIdV2(@PathVariable(name = "id") long id){
         // returning postdto
         PostDto postDto = postService.getPostById(id);
