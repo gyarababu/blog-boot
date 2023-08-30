@@ -42,16 +42,20 @@ public class BlogBootApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		// Check if roles already exist in the database
-		if (roleRepository.findByName("ROLE_ADMIN") == null) {
-			Role adminRole = new Role();
-			adminRole.setName("ROLE_ADMIN");
-			roleRepository.save(adminRole);
-		}
+		try {
+			if (roleRepository.findByName("ROLE_ADMIN") == null) {
+				Role adminRole = new Role();
+				adminRole.setName("ROLE_ADMIN");
+				roleRepository.save(adminRole);
+			}
 
-		if (roleRepository.findByName("ROLE_USER") == null) {
-			Role userRole = new Role();
-			userRole.setName("ROLE_USER");
-			roleRepository.save(userRole);
+			if (roleRepository.findByName("ROLE_USER") == null) {
+				Role userRole = new Role();
+				userRole.setName("ROLE_USER");
+				roleRepository.save(userRole);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 }

@@ -1,5 +1,6 @@
 package com.blog.boot.payload;
 
+import com.blog.boot.enums.UserRole;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -34,4 +35,9 @@ public class RegisterDto {
             description = "Blog Register Password"
     )
     private String password;
+
+    @Schema(
+            description = "User role"
+    )
+    private UserRole userRole;
 }

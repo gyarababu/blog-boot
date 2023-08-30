@@ -83,9 +83,9 @@ public class AuthServiceImpl implements AuthService {
 
         // Create a set to hold user roles
         Set<Role> roles = new HashSet<>();
-        // Retrieve the 'ROLE_USER' role from the role repository
-        Role userRole = roleRepository.findByName("ROLE_USER").get();
-        roles.add(userRole); // Add the 'ROLE_USER' role to the roles set
+        // Convert UserRole enum to role name and fetch role from repository
+        Role userRole = roleRepository.findByName(registerDto.getUserRole().name());
+        roles.add(userRole); // Add the user role to the roles set
         user.setRoles(roles); // Assign the roles set to the user's roles
 
         // Save the user object in the userRepository
