@@ -1,5 +1,6 @@
 package com.blog.boot.service.impl;
 
+import com.blog.boot.controller.PostController;
 import com.blog.boot.entity.Role;
 import com.blog.boot.entity.User;
 import com.blog.boot.exception.BlogAPIException;
@@ -9,6 +10,8 @@ import com.blog.boot.repository.RoleRepository;
 import com.blog.boot.repository.UserRepository;
 import com.blog.boot.security.JwtTokenProvider;
 import com.blog.boot.service.AuthService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -22,6 +25,9 @@ import java.util.Set;
 
 @Service
 public class AuthServiceImpl implements AuthService {
+
+    Logger logger = LoggerFactory.getLogger(AuthServiceImpl.class);
+
 
     private AuthenticationManager authenticationManager;
     private UserRepository userRepository;
@@ -42,6 +48,7 @@ public class AuthServiceImpl implements AuthService {
     // creating login method and authenticating using in built Authentication interface
     @Override
     public String login(LoginDto loginDto) {
+        logger.info("started login or signin service class for user info log level ");
 
         // Attempting to authenticate the user using provided credentials
         Authentication authentication = authenticationManager
@@ -54,14 +61,16 @@ public class AuthServiceImpl implements AuthService {
         SecurityContextHolder
                 .getContext()
                 .setAuthentication(authentication);
-
+        logger.info("ended login or signin service class for user info log level ");
         // generate JWT token and return it
         String token = jwtTokenProvider.generateJwtToken(authentication);
+        logger.info("generated JWT Token in service class for user info log level ");
         return token;
     }
 
     @Override
     public String register(RegisterDto registerDto) {
+        logger.info("started register or signup service class for user info log level ");
 
         // checking userName already exists
         if (userRepository.existsByUserName(registerDto.getUserName())){
@@ -90,6 +99,7 @@ public class AuthServiceImpl implements AuthService {
 
         // Save the user object in the userRepository
         userRepository.save(user);
+        logger.info("ended register or signup service class for user info log level ");
 
         // Return a success message after user registration
         return "User registered successfully";

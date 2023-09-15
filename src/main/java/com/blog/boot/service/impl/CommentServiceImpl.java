@@ -9,6 +9,8 @@ import com.blog.boot.repository.CommentRepository;
 import com.blog.boot.repository.PostRepository;
 import com.blog.boot.service.CommentService;
 import org.modelmapper.ModelMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +19,8 @@ import java.util.stream.Collectors;
 
 @Service
 public class CommentServiceImpl implements CommentService {
+
+    Logger logger = LoggerFactory.getLogger(CommentServiceImpl.class);
 
     private CommentRepository commentRepository;
     private PostRepository postRepository;
@@ -32,6 +36,7 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public CommentDto createComment(long postId, CommentDto commentDto) {
+        logger.info("started create comment service class for user info log level ");
 
         // convert commentDto to entity
         Comment comment = mapToEntity(commentDto);
@@ -46,6 +51,7 @@ public class CommentServiceImpl implements CommentService {
 
         // save the comment entity
         Comment newComment = commentRepository.save(comment);
+        logger.info("ended create comment service class for user info log level ");
 
         // covert entity to DTO and return
         return mapToDTO(newComment);
@@ -53,9 +59,11 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public List<CommentDto> getAllCommentsByPostId(long postId) {
+        logger.info("started get all comments service class for user info log level ");
 
         // find list of comments by post id
         List<Comment> comments = commentRepository.findAllCommentsByPostId(postId);
+        logger.info("ended get all comments service class for user info log level ");
 
         // convert each comment to DTO and return
         return comments.stream().map(comment -> mapToDTO(comment)).collect(Collectors.toList());
@@ -63,6 +71,7 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public CommentDto getCommentById(long postId, long commentId) {
+        logger.info("started get comment service class for user info log level ");
 
         // find post by Id
         Post post = postRepository.findById(postId).orElseThrow(
@@ -78,6 +87,7 @@ public class CommentServiceImpl implements CommentService {
         if (!comment.getPost().getId().equals(post.getId())){
             throw new BlogAPIException(HttpStatus.BAD_REQUEST, "Comment does not belong to Post");
         }
+        logger.info("ended get comment service class for user info log level ");
 
         // convert to DTO and return
         return mapToDTO(comment);
@@ -85,6 +95,7 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public CommentDto updateComment(long postId, long commentId, CommentDto commentDto) {
+        logger.info("started update comment service class for user info log level ");
 
         // find post by Id
         Post post = postRepository.findById(postId).orElseThrow(
@@ -108,6 +119,7 @@ public class CommentServiceImpl implements CommentService {
 
         // saving values
         Comment updatedComment = commentRepository.save(comment);
+        logger.info("ended update comment service class for user info log level ");
 
         // convert to DTO and return
         return mapToDTO(updatedComment);
@@ -115,6 +127,7 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public void deleteComment(long postId, long commentId) {
+        logger.info("started delete comment service class for user info log level ");
 
         // find post by Id
         Post post = postRepository.findById(postId).orElseThrow(
@@ -132,6 +145,8 @@ public class CommentServiceImpl implements CommentService {
         }
 
         commentRepository.delete(comment);
+        logger.info("ended delete comment service class for user info log level ");
+
     }
 
 

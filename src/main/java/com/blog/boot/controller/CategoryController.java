@@ -6,6 +6,8 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -19,6 +21,8 @@ import java.util.List;
         name = "Category Resource CRUD REST APIs"
 )
 public class CategoryController {
+
+    Logger logger = LoggerFactory.getLogger(CategoryController.class);
 
     private CategoryService categoryService;
 
@@ -43,6 +47,8 @@ public class CategoryController {
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/categories")
     public ResponseEntity<CategoryDto> addCategory(@RequestBody CategoryDto categoryDto){
+        logger.info("started category post controller for user info log level ");
+
         CategoryDto newCategory = categoryService.addCategory(categoryDto);
         return new ResponseEntity<CategoryDto>(newCategory, HttpStatus.CREATED);
     }
@@ -58,6 +64,8 @@ public class CategoryController {
     // create get category REST API
     @GetMapping("/categories/{id}")
     public ResponseEntity<CategoryDto> getCategory(@PathVariable("id") long categoryId){
+        logger.info("started get category by id controller for user info log level ");
+
         CategoryDto categoryDto = categoryService.getCategory(categoryId);
         return ResponseEntity.ok(categoryDto);
     }
@@ -73,6 +81,8 @@ public class CategoryController {
     // create get all categories REST API
     @GetMapping("/categories")
     public ResponseEntity<List<CategoryDto>> getAllCategories(){
+        logger.info("started get all categories controller for user info log level ");
+
         return  ResponseEntity.ok(categoryService.getAllCategories());
     }
 
@@ -94,6 +104,8 @@ public class CategoryController {
     @PutMapping("/categories/{id}")
     public ResponseEntity<CategoryDto> updateCategory(@RequestBody CategoryDto categoryDto,
                                                       @PathVariable("id") long categoryId){
+        logger.info("started put category by id controller for user info log level ");
+
         return ResponseEntity.ok(categoryService.updateCategory(categoryDto, categoryId));
     }
 
@@ -114,6 +126,8 @@ public class CategoryController {
     @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/categories/{id}")
     public  ResponseEntity<String> deleteCategory(@PathVariable("id") long categoryId){
+        logger.info("started delete category by id controller for user info log level ");
+
         categoryService.deleteCategory(categoryId);
         return ResponseEntity.ok("Category deleted successfully");
     }

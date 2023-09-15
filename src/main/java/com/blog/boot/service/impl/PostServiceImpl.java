@@ -9,6 +9,8 @@ import com.blog.boot.repository.CategoryRepository;
 import com.blog.boot.repository.PostRepository;
 import com.blog.boot.service.PostService;
 import org.modelmapper.ModelMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -21,6 +23,7 @@ import java.util.stream.Collectors;
 @Service
 public class PostServiceImpl implements PostService {
 
+    Logger logger = LoggerFactory.getLogger(PostServiceImpl.class);
 
     private PostRepository postRepository;
 
@@ -37,6 +40,7 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public PostDto createPost(PostDto postDto) {
+        logger.info("started create post service class for user info log level ");
 
         // find category id
         Category category = categoryRepository.findById(postDto.getCategoryId()).orElseThrow(() ->
@@ -53,6 +57,7 @@ public class PostServiceImpl implements PostService {
 
         // convert entity to DTO
         PostDto postResponse = mapToDTO(newPost);
+        logger.info("ended create post service class for user info log level ");
 
         // sending the DTO to Rest endpoint
         return postResponse;
@@ -61,6 +66,7 @@ public class PostServiceImpl implements PostService {
     @Override
     // changing List<PostDto> to PostResponse since returning PostResponse for paging support
     public PostResponse getAllPosts(int pageNo, int pageSize, String sortBy, String sortDir) {
+        logger.info("started get all posts service class for user info log level ");
 
         // sorting instance for both sorting parameters
         Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.ASC.name()) ?
@@ -86,15 +92,20 @@ public class PostServiceImpl implements PostService {
         postResponse.setTotalElements(posts.getTotalElements());
         postResponse.setTotalPages(posts.getTotalPages());
         postResponse.setLastPage(posts.isLast());
+        logger.info("ended get all posts service class for user info log level ");
+
         return postResponse;
     }
 
     @Override
     public PostDto getPostById(long id) {
+        logger.info("started get post service class for user info log level ");
+
         // finding the post by id
         Post post = postRepository.findById(id).orElseThrow(
                 () -> new ResourceNotFoundException("Post","id",id)
         );
+        logger.info("ended create post service class for user info log level ");
 
         // converting to DTO
         return mapToDTO(post);
@@ -102,6 +113,8 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public PostDto updatePostById(long id, PostDto postDto) {
+        logger.info("started update post service class for user info log level ");
+
         // finding the post by id
         Post post = postRepository.findById(id).orElseThrow(
                 () -> new ResourceNotFoundException("Post", "id", id)
@@ -121,6 +134,7 @@ public class PostServiceImpl implements PostService {
 
         // saving the details
         Post updatedPost = postRepository.save(post);
+        logger.info("ended update post service class for user info log level ");
 
         // converting to DTO
         return mapToDTO(updatedPost);
@@ -128,6 +142,8 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public void deletePostById(long id) {
+        logger.info("started delete post service class for user info log level ");
+
         // find the post by id
         Post post = postRepository.findById(id).orElseThrow(
                 () -> new ResourceNotFoundException("Post", "id", id)
@@ -135,10 +151,13 @@ public class PostServiceImpl implements PostService {
 
         // delete post by id
         postRepository.delete(post);
+        logger.info("ended delete post service class for user info log level ");
+
     }
 
     @Override
     public List<PostDto> getPostsByCategory(long categoryId) {
+        logger.info("started get posts by category service class for user info log level ");
 
         // find category id
         Category category = categoryRepository.findById(categoryId).orElseThrow(() ->
@@ -146,6 +165,7 @@ public class PostServiceImpl implements PostService {
 
         // find posts by category id
         List<Post> posts = postRepository.findByCategoryId(categoryId);
+        logger.info("ended get posts by category service class for user info log level ");
 
         // convert entity to dto
         return posts.stream().map((post) -> mapToDTO(post)).collect(Collectors.toList());

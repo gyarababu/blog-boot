@@ -1,0 +1,83 @@
+2023-09-15T18:42:45.205+05:30  INFO 2452 --- [restartedMain] com.blog.boot.BlogBootApplication        : Starting BlogBootApplication using Java 17.0.8 with PID 2452 (D:\Programmer\Projects\blog-boot\target\classes started by Johnny in D:\Programmer\Projects\blog-boot)
+2023-09-15T18:42:45.223+05:30  INFO 2452 --- [restartedMain] com.blog.boot.BlogBootApplication        : The following 1 profile is active: "dev"
+2023-09-15T18:42:45.540+05:30  INFO 2452 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2023-09-15T18:42:45.540+05:30  INFO 2452 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2023-09-15T18:42:47.568+05:30  INFO 2452 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-09-15T18:42:47.708+05:30  INFO 2452 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 126 ms. Found 5 JPA repository interfaces.
+2023-09-15T18:42:49.384+05:30  INFO 2452 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2023-09-15T18:42:49.403+05:30  INFO 2452 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2023-09-15T18:42:49.404+05:30  INFO 2452 --- [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.1]
+2023-09-15T18:42:49.524+05:30  INFO 2452 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2023-09-15T18:42:49.526+05:30  INFO 2452 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 3984 ms
+2023-09-15T18:42:49.904+05:30  INFO 2452 --- [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-09-15T18:42:50.005+05:30  INFO 2452 --- [restartedMain] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.1.5.Final
+2023-09-15T18:42:50.379+05:30  WARN 2452 --- [restartedMain] org.hibernate.orm.deprecation            : HHH90000021: Encountered deprecated setting [javax.persistence.sharedCache.mode], use [jakarta.persistence.sharedCache.mode] instead
+2023-09-15T18:42:50.622+05:30  INFO 2452 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2023-09-15T18:42:51.164+05:30  INFO 2452 --- [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@34988fe5
+2023-09-15T18:42:51.168+05:30  INFO 2452 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2023-09-15T18:42:51.248+05:30  INFO 2452 --- [restartedMain] SQL dialect                              : HHH000400: Using dialect: org.hibernate.dialect.MySQLDialect
+2023-09-15T18:42:53.226+05:30  INFO 2452 --- [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-09-15T18:42:53.236+05:30  INFO 2452 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-09-15T18:42:54.736+05:30  WARN 2452 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-09-15T18:42:56.824+05:30  INFO 2452 --- [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@7ed91c3f, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@700b8045, org.springframework.security.web.context.SecurityContextHolderFilter@453e97da, org.springframework.security.web.header.HeaderWriterFilter@2d873b9d, org.springframework.security.web.authentication.logout.LogoutFilter@368af50, com.blog.boot.security.JwtAuthenticationFilter@f3620a0, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@1c57ce78, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@68527e89, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@ef23089, org.springframework.security.web.session.SessionManagementFilter@637e3e5d, org.springframework.security.web.access.ExceptionTranslationFilter@5e0b7787, org.springframework.security.web.access.intercept.AuthorizationFilter@17233fee]
+2023-09-15T18:42:57.619+05:30  INFO 2452 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2023-09-15T18:42:57.767+05:30  INFO 2452 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
+2023-09-15T18:42:57.797+05:30  INFO 2452 --- [restartedMain] com.blog.boot.BlogBootApplication        : Started BlogBootApplication in 13.769 seconds (process running for 14.882)
+2023-09-15T18:43:36.812+05:30  INFO 2452 --- [http-nio-8080-exec-2] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2023-09-15T18:43:36.813+05:30  INFO 2452 --- [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2023-09-15T18:43:36.817+05:30  INFO 2452 --- [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Completed initialization in 4 ms
+2023-09-15T18:43:37.030+05:30  INFO 2452 --- [http-nio-8080-exec-2] c.blog.boot.controller.AuthController    : started register or signup controller for user info log level 
+2023-09-15T18:43:37.031+05:30  INFO 2452 --- [http-nio-8080-exec-2] c.b.boot.service.impl.AuthServiceImpl    : started register or signup service class for user info log level 
+2023-09-15T18:43:37.352+05:30  INFO 2452 --- [http-nio-8080-exec-2] c.b.boot.service.impl.AuthServiceImpl    : ended register or signup service class for user info log level 
+2023-09-15T18:44:01.720+05:30  INFO 2452 --- [http-nio-8080-exec-3] c.blog.boot.controller.AuthController    : started login or signin controller for user info log level 
+2023-09-15T18:44:01.720+05:30  INFO 2452 --- [http-nio-8080-exec-3] c.b.boot.service.impl.AuthServiceImpl    : started login or signin service class for user info log level 
+2023-09-15T18:44:02.027+05:30  INFO 2452 --- [http-nio-8080-exec-3] c.b.boot.service.impl.AuthServiceImpl    : ended login or signin service class for user info log level 
+2023-09-15T18:44:02.070+05:30  INFO 2452 --- [http-nio-8080-exec-3] c.b.boot.service.impl.AuthServiceImpl    : generated JWT Token in service class for user info log level 
+2023-09-15T18:44:47.264+05:30  INFO 2452 --- [http-nio-8080-exec-5] c.b.boot.controller.CategoryController   : started category post controller for user info log level 
+2023-09-15T18:44:47.264+05:30  INFO 2452 --- [http-nio-8080-exec-5] c.b.b.service.impl.CategoryServiceImpl   : started add category service class for user info log level 
+2023-09-15T18:44:47.306+05:30  INFO 2452 --- [http-nio-8080-exec-5] c.b.b.service.impl.CategoryServiceImpl   : ended add category service class for user info log level 
+2023-09-15T18:45:49.840+05:30  INFO 2452 --- [http-nio-8080-exec-7] c.b.boot.controller.CategoryController   : started get category by id controller for user info log level 
+2023-09-15T18:45:49.841+05:30  INFO 2452 --- [http-nio-8080-exec-7] c.b.b.service.impl.CategoryServiceImpl   : started get category service class for user info log level 
+2023-09-15T18:45:49.864+05:30  INFO 2452 --- [http-nio-8080-exec-7] c.b.b.service.impl.CategoryServiceImpl   : ended get category service class for user info log level 
+2023-09-15T18:46:39.080+05:30  INFO 2452 --- [http-nio-8080-exec-4] c.b.boot.controller.CategoryController   : started get all categories controller for user info log level 
+2023-09-15T18:46:39.081+05:30  INFO 2452 --- [http-nio-8080-exec-4] c.b.b.service.impl.CategoryServiceImpl   : started get all categories service class for user info log level 
+2023-09-15T18:46:39.090+05:30  INFO 2452 --- [http-nio-8080-exec-4] c.b.b.service.impl.CategoryServiceImpl   : ended get all categories service class for user info log level 
+2023-09-15T18:49:13.593+05:30  INFO 2452 --- [http-nio-8080-exec-2] c.b.boot.controller.CategoryController   : started put category by id controller for user info log level 
+2023-09-15T18:49:13.594+05:30  INFO 2452 --- [http-nio-8080-exec-2] c.b.b.service.impl.CategoryServiceImpl   : started update category service class for user info log level 
+2023-09-15T18:49:13.607+05:30  INFO 2452 --- [http-nio-8080-exec-2] c.b.b.service.impl.CategoryServiceImpl   : ended update category service class for user info log level
+2023-09-15T18:50:08.646+05:30  INFO 2452 --- [http-nio-8080-exec-3] c.b.boot.controller.CategoryController   : started delete category by id controller for user info log level 
+2023-09-15T18:50:08.647+05:30  INFO 2452 --- [http-nio-8080-exec-3] c.b.b.service.impl.CategoryServiceImpl   : started delete category service class for user info log level 
+2023-09-15T18:50:08.670+05:30  INFO 2452 --- [http-nio-8080-exec-3] c.b.b.service.impl.CategoryServiceImpl   : ended delete category service class for user info log level
+2023-09-15T18:52:04.235+05:30  INFO 2452 --- [http-nio-8080-exec-9] c.blog.boot.controller.PostController    : started create post controller for user info log level 
+2023-09-15T18:52:04.236+05:30  INFO 2452 --- [http-nio-8080-exec-9] c.b.boot.service.impl.PostServiceImpl    : started create post service class for user info log level 
+2023-09-15T18:52:04.275+05:30  INFO 2452 --- [http-nio-8080-exec-9] c.b.boot.service.impl.PostServiceImpl    : ended create post service class for user info log level 
+2023-09-15T18:53:02.066+05:30  INFO 2452 --- [http-nio-8080-exec-7] c.blog.boot.controller.PostController    : started get all posts controller for user info log level 
+2023-09-15T18:53:02.067+05:30  INFO 2452 --- [http-nio-8080-exec-7] c.b.boot.service.impl.PostServiceImpl    : started get all posts service class for user info log level 
+2023-09-15T18:53:02.116+05:30  INFO 2452 --- [http-nio-8080-exec-7] c.b.boot.service.impl.PostServiceImpl    : ended get all posts service class for user info log level 
+2023-09-15T18:53:36.725+05:30  INFO 2452 --- [http-nio-8080-exec-4] c.blog.boot.controller.PostController    : started get post by id controller for user info log level 
+2023-09-15T18:53:36.725+05:30  INFO 2452 --- [http-nio-8080-exec-4] c.b.boot.service.impl.PostServiceImpl    : started get post service class for user info log level 
+2023-09-15T18:53:36.733+05:30  INFO 2452 --- [http-nio-8080-exec-4] c.b.boot.service.impl.PostServiceImpl    : ended create post service class for user info log level 
+2023-09-15T18:54:45.456+05:30  INFO 2452 --- [http-nio-8080-exec-1] c.blog.boot.controller.PostController    : started get all posts by category controller for user info log level 
+2023-09-15T18:54:45.457+05:30  INFO 2452 --- [http-nio-8080-exec-1] c.b.boot.service.impl.PostServiceImpl    : started get posts by category service class for user info log level 
+2023-09-15T18:54:45.475+05:30  INFO 2452 --- [http-nio-8080-exec-1] c.b.boot.service.impl.PostServiceImpl    : ended get posts by category service class for user info log level 
+2023-09-15T18:55:29.419+05:30  INFO 2452 --- [http-nio-8080-exec-2] c.b.boot.controller.CommentController    : started create comment by postId controller for user info log level 
+2023-09-15T18:55:29.419+05:30  INFO 2452 --- [http-nio-8080-exec-2] c.b.b.service.impl.CommentServiceImpl    : started create comment service class for user info log level 
+2023-09-15T18:55:29.437+05:30  INFO 2452 --- [http-nio-8080-exec-2] c.b.b.service.impl.CommentServiceImpl    : ended create comment service class for user info log level 
+2023-09-15T18:56:13.376+05:30  INFO 2452 --- [http-nio-8080-exec-3] c.b.boot.controller.CommentController    : started get all comments by postId controller for user info log level 
+2023-09-15T18:56:13.376+05:30  INFO 2452 --- [http-nio-8080-exec-3] c.b.b.service.impl.CommentServiceImpl    : started get all comments service class for user info log level 
+2023-09-15T18:56:13.382+05:30  INFO 2452 --- [http-nio-8080-exec-3] c.b.b.service.impl.CommentServiceImpl    : ended get all comments service class for user info log level 
+2023-09-15T18:56:48.618+05:30  INFO 2452 --- [http-nio-8080-exec-5] c.b.boot.controller.CommentController    : started get comment by commentId controller for user info log level 
+2023-09-15T18:56:48.619+05:30  INFO 2452 --- [http-nio-8080-exec-5] c.b.b.service.impl.CommentServiceImpl    : started get comment service class for user info log level 
+2023-09-15T18:56:48.631+05:30  INFO 2452 --- [http-nio-8080-exec-5] c.b.b.service.impl.CommentServiceImpl    : ended get comment service class for user info log level 
+2023-09-15T18:58:04.056+05:30  INFO 2452 --- [http-nio-8080-exec-7] c.blog.boot.controller.PostController    : started put post by id controller for user info log level 
+2023-09-15T18:58:04.056+05:30  INFO 2452 --- [http-nio-8080-exec-7] c.b.boot.service.impl.PostServiceImpl    : started update post service class for user info log level 
+2023-09-15T18:58:04.074+05:30  INFO 2452 --- [http-nio-8080-exec-7] c.b.boot.service.impl.PostServiceImpl    : ended update post service class for user info log level 
+2023-09-15T18:58:55.393+05:30  INFO 2452 --- [http-nio-8080-exec-4] c.blog.boot.controller.PostController    : started delete post controller for user info log level 
+2023-09-15T18:58:55.393+05:30  INFO 2452 --- [http-nio-8080-exec-4] c.b.boot.service.impl.PostServiceImpl    : started delete post service class for user info log level 
+2023-09-15T18:58:55.408+05:30  INFO 2452 --- [http-nio-8080-exec-4] c.b.boot.service.impl.PostServiceImpl    : ended delete post service class for user info log level 
+2023-09-15T19:00:43.904+05:30  INFO 2452 --- [http-nio-8080-exec-1] c.b.boot.controller.CommentController    : started put comment by commentId controller for user info log level 
+2023-09-15T19:00:43.904+05:30  INFO 2452 --- [http-nio-8080-exec-1] c.b.b.service.impl.CommentServiceImpl    : started update comment service class for user info log level 
+2023-09-15T19:00:43.925+05:30  INFO 2452 --- [http-nio-8080-exec-1] c.b.b.service.impl.CommentServiceImpl    : ended update comment service class for user info log level 
+2023-09-15T19:01:45.158+05:30  INFO 2452 --- [http-nio-8080-exec-5] c.b.boot.controller.CommentController    : started delete comment by commentId controller for user info log level 
+2023-09-15T19:01:45.158+05:30  INFO 2452 --- [http-nio-8080-exec-5] c.b.b.service.impl.CommentServiceImpl    : started delete comment service class for user info log level 
+2023-09-15T19:01:45.176+05:30  INFO 2452 --- [http-nio-8080-exec-5] c.b.b.service.impl.CommentServiceImpl    : ended delete comment service class for user info log level 

@@ -8,6 +8,8 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -22,6 +24,8 @@ import java.util.List;
         name = "Post Resource CRUD REST APIs"
 )
 public class PostController {
+
+    Logger logger = LoggerFactory.getLogger(PostController.class);
 
     // we are using interface for LooseCoupling.
     // We are not using classes or Implementation which gives TightCoupling
@@ -51,6 +55,8 @@ public class PostController {
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/posts") // versioning
     public ResponseEntity<PostDto> createPost(@Valid @RequestBody PostDto postDto){
+        logger.info("started create post controller for user info log level ");
+
         // we are passing PostDto or else we will be getting Object as Type in service
         // we are passing HttpsStatus as 2nd Parameter
         return new ResponseEntity<PostDto>(postService.createPost(postDto), HttpStatus.CREATED);
@@ -76,6 +82,8 @@ public class PostController {
                                     @RequestParam(name = "sortDir", defaultValue = Constants.DEFAULT_SORT_DIRECTION,
                                             required = false) String sortDir
     ){
+        logger.info("started get all posts controller for user info log level ");
+
         return postService.getAllPosts(pageNo, pageSize, sortBy, sortDir);
     }
 
@@ -92,7 +100,9 @@ public class PostController {
     // Need to pass values or parameters in Flower braces - {}
     @GetMapping(value = "/posts/{id}")
     public ResponseEntity<PostDto> getPostByIdV1(@PathVariable(name = "id") long id){
-       // return new ResponseEntity<PostDto>(postService.getPostById(id), HttpStatus.OK);
+        logger.info("started get post by id controller for user info log level ");
+
+        // return new ResponseEntity<PostDto>(postService.getPostById(id), HttpStatus.OK);
         // instead we can write like this
         return ResponseEntity.ok(postService.getPostById(id));
 
@@ -116,6 +126,8 @@ public class PostController {
     @PutMapping("/posts/{id}") // versioning
     public ResponseEntity<PostDto> updatePostById(@PathVariable(name = "id") long id,
                                                   @Valid @RequestBody PostDto postDto){
+        logger.info("started put post by id controller for user info log level ");
+
         // since we have two objects, we are passing them together as one object - postResponse
         PostDto postResponse = postService.updatePostById(id, postDto);
         return new ResponseEntity<PostDto>(postResponse, HttpStatus.OK);
@@ -138,6 +150,8 @@ public class PostController {
     @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/posts/{id}") // versioning
     public ResponseEntity<String> deletePostById(@PathVariable(name = "id") long id){
+        logger.info("started delete post controller for user info log level ");
+
         postService.deletePostById(id);
         return new ResponseEntity<>("Post Deleted Successfully", HttpStatus.OK);
     }
@@ -154,6 +168,8 @@ public class PostController {
     // http://localhost:8080/api/posts/category/1
     @GetMapping("/posts/category/{id}") // versioning
     public ResponseEntity<List<PostDto>> getPostsByCategoryId(@PathVariable("id") long categoryId){
+        logger.info("started get all posts by category controller for user info log level ");
+
         List<PostDto> postDtos = postService.getPostsByCategory(categoryId);
         return  ResponseEntity.ok(postDtos);
     }
